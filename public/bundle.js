@@ -1,41 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -46,7 +46,7 @@
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -55,13 +55,13 @@
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
@@ -136,8 +136,7 @@ class Spread extends __WEBPACK_IMPORTED_MODULE_0__BookPart__["a" /* default */] 
   }
 
   updateChildren() {
-    const openAmount = this.openAmount;
-    this.childPopUps.forEach(popup => popup.update(openAmount));
+    this.childPopUps.forEach(popup => popup.update(this.openAmount));
   }
 
   showChildren() {
@@ -197,6 +196,7 @@ class App {
     this.startX = 0;
     this.mouseX = 0;
     this.mouseDown = false;
+    this.ticking = false;
 
     // higher number = slower page turn speed;
     this.sensitivity = 3;
@@ -212,6 +212,7 @@ class App {
       this.book.setState(this.bookMoveStart + diff);
       this.book.update();
     }
+    this.ticking = false;
   }
   handleMouseUp() {
     this.mouseDown = false;
@@ -223,7 +224,10 @@ class App {
   }
   handleMouseMove(e) {
     this.mouseX = e.pageX;
-    window.requestAnimationFrame(this.updateBook.bind(this));
+    if (!this.ticking) {
+      this.ticking = true;
+      window.requestAnimationFrame(this.updateBook.bind(this));
+    }
   }
 }
 
@@ -251,8 +255,7 @@ const AnimatedTransform = function AnimatedTransform(type, startVal, endVal, uni
    */
   const interpolatedVal = function interpolatedVal(progress) {
     const easedProgress = progress * progress * progress;
-    const diff = this.endVal - this.startVal;
-    return this.startVal + (diff * easedProgress);
+    return this.startVal + (this.valDiff * easedProgress);
   };
 
   // get string value transformX(10px)
@@ -265,6 +268,7 @@ const AnimatedTransform = function AnimatedTransform(type, startVal, endVal, uni
     type,
     startVal,
     endVal,
+    valDiff: endVal - startVal,
     unit,
     interpolatedVal,
     interpolatedString,
@@ -608,3 +612,4 @@ app.start();
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=bundle.js.map
