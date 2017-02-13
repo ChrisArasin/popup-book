@@ -8,6 +8,7 @@ class App {
     this.startX = 0;
     this.mouseX = 0;
     this.mouseDown = false;
+    this.ticking = false;
 
     // higher number = slower page turn speed;
     this.sensitivity = 3;
@@ -23,6 +24,7 @@ class App {
       this.book.setState(this.bookMoveStart + diff);
       this.book.update();
     }
+    this.ticking = false;
   }
   handleMouseUp() {
     this.mouseDown = false;
@@ -34,7 +36,10 @@ class App {
   }
   handleMouseMove(e) {
     this.mouseX = e.pageX;
-    window.requestAnimationFrame(this.updateBook.bind(this));
+    if (!this.ticking) {
+      this.ticking = true;
+      window.requestAnimationFrame(this.updateBook.bind(this));
+    }
   }
 }
 
