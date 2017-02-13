@@ -14,8 +14,7 @@ const AnimatedTransform = function AnimatedTransform(type, startVal, endVal, uni
    */
   const interpolatedVal = function interpolatedVal(progress) {
     const easedProgress = progress * progress * progress;
-    const diff = this.endVal - this.startVal;
-    return this.startVal + (diff * easedProgress);
+    return this.startVal + (this.valDiff * easedProgress);
   };
 
   // get string value transformX(10px)
@@ -28,6 +27,7 @@ const AnimatedTransform = function AnimatedTransform(type, startVal, endVal, uni
     type,
     startVal,
     endVal,
+    valDiff: endVal - startVal,
     unit,
     interpolatedVal,
     interpolatedString,

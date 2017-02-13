@@ -38,8 +38,7 @@ class Spread extends BookPart {
   }
 
   updateChildren() {
-    const openAmount = this.openAmount;
-    this.childPopUps.forEach(popup => popup.update(openAmount));
+    this.childPopUps.forEach(popup => popup.update(this.openAmount));
   }
 
   showChildren() {
