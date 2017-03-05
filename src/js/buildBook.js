@@ -11,11 +11,13 @@ export default function buildBook() {
   const supermanSpread = makeHeroSpread('superman');
   const batmanSpread = makeHeroSpread('batman');
 
+  // build book in #book id
   const book = new Book('book');
   book.addSpread(frontCover)
       .addSpread(supermanSpread)
       .addSpread(batmanSpread)
       .addSpread(backCover)
       .update();
+
   return book;
 }
